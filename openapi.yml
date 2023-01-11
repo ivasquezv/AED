@@ -1,0 +1,603 @@
+components:
+  schemas:
+    APIContracTypes:
+      description: API Contract Types
+      enum:
+      - openapi
+      title: APIContracTypes
+    ApiContract:
+      properties:
+        api_schema:
+          items:
+            $ref: '#/components/schemas/ApiSchemas'
+          title: Api Schema
+          type: array
+        contract_data:
+          format: binary
+          title: Contract Data
+          type: string
+        created_at:
+          format: date-time
+          title: Created At
+          type: string
+        description:
+          title: Description
+          type: string
+        id:
+          title: Id
+          type: integer
+        title:
+          title: Title
+          type: string
+        type:
+          $ref: '#/components/schemas/APIContracTypes'
+        user_id:
+          title: User Id
+          type: string
+        version:
+          title: Version
+          type: string
+      required:
+      - title
+      - description
+      - version
+      - type
+      - user_id
+      - contract_data
+      title: ApiContract
+      type: object
+    ApiSchemas:
+      properties:
+        api_contract_id:
+          title: Api Contract Id
+          type: integer
+        avro_schema:
+          format: binary
+          title: Avro Schema
+          type: string
+        bigquery_schema:
+          format: binary
+          title: Bigquery Schema
+          type: string
+        created_at:
+          format: date-time
+          title: Created At
+          type: string
+        id:
+          title: Id
+          type: integer
+        parent_schema:
+          title: Parent Schema
+          type: string
+      required:
+      - api_contract_id
+      - parent_schema
+      - avro_schema
+      - bigquery_schema
+      title: ApiSchemas
+      type: object
+    Body_api_contracts_create_contract_api_contracts__post:
+      properties:
+        file:
+          description: A file read as UploadFile
+          format: binary
+          title: File
+          type: string
+      required:
+      - file
+      title: Body_api_contracts_create_contract_api_contracts__post
+      type: object
+    CRDetails:
+      properties:
+        cloud_resource_id:
+          title: Cloud Resource Id
+          type: integer
+        created_at:
+          format: date-time
+          title: Created At
+          type: string
+        id:
+          title: Id
+          type: integer
+        key:
+          title: Key
+          type: string
+        value:
+          title: Value
+          type: string
+      required:
+      - cloud_resource_id
+      - key
+      - value
+      title: CRDetails
+      type: object
+    CloudResources:
+      properties:
+        dependency_type:
+          $ref: '#/components/schemas/DependencyTypes'
+        details:
+          items:
+            $ref: '#/components/schemas/CRDetails'
+          title: Details
+          type: array
+        id:
+          title: Id
+          type: integer
+        name:
+          title: Name
+          type: string
+        real_time_ingestion_id:
+          title: Real Time Ingestion Id
+          type: integer
+        resource_id:
+          title: Resource Id
+          type: string
+        state:
+          $ref: '#/components/schemas/CloudResourcesStates'
+        type:
+          $ref: '#/components/schemas/CloudResourcesTypes'
+      required:
+      - name
+      - type
+      - state
+      - dependency_type
+      - resource_id
+      - real_time_ingestion_id
+      title: CloudResources
+      type: object
+    CloudResourcesDetailRQ:
+      properties:
+        key:
+          title: Key
+          type: string
+        value:
+          title: Value
+          type: string
+      required:
+      - key
+      - value
+      title: CloudResourcesDetailRQ
+      type: object
+    CloudResourcesRQ:
+      properties:
+        dependency_type:
+          $ref: '#/components/schemas/DependencyTypes'
+        details:
+          items:
+            $ref: '#/components/schemas/CloudResourcesDetailRQ'
+          title: Details
+          type: array
+        id:
+          title: Id
+          type: string
+        process_name:
+          title: Process Name
+          type: string
+        process_type:
+          $ref: '#/components/schemas/CloudResourcesTypes'
+      required:
+      - id
+      - process_name
+      - dependency_type
+      - process_type
+      - details
+      title: CloudResourcesRQ
+      type: object
+    CloudResourcesStates:
+      description: An enumeration.
+      enum:
+      - creating
+      - running
+      - failed
+      - deleting
+      - pending
+      title: CloudResourcesStates
+    CloudResourcesTypes:
+      description: An enumeration.
+      enum:
+      - gcp_bigquery_table
+      - gcp_pubsub_topic
+      - gcp_pubsub_subscription
+      - gcp_service_account
+      - gcp_storage
+      - gcp_cloud_run
+      - gcp_pubsub_schema
+      title: CloudResourcesTypes
+    ContractCreate:
+      properties:
+        api_contract_id:
+          title: Api Contract Id
+          type: integer
+        parent_schema:
+          title: Parent Schema
+          type: string
+        partition_column:
+          title: Partition Column
+          type: string
+        process_description:
+          title: Process Description
+          type: string
+        process_name:
+          title: Process Name
+          type: string
+        rti_type:
+          $ref: '#/components/schemas/IngestionTypes'
+        table_id:
+          title: Table Id
+          type: string
+        topic_name:
+          title: Topic Name
+          type: string
+      required:
+      - api_contract_id
+      - parent_schema
+      - rti_type
+      - table_id
+      - partition_column
+      - topic_name
+      - process_name
+      - process_description
+      title: ContractCreate
+      type: object
+    DependencyTypes:
+      description: An enumeration.
+      enum:
+      - internal
+      - input
+      - output
+      title: DependencyTypes
+    GitopsRequest:
+      properties:
+        api_schemas_id:
+          title: Api Schemas Id
+          type: integer
+        parent_schema:
+          title: Parent Schema
+          type: string
+        partition_column:
+          title: Partition Column
+          type: string
+        process_description:
+          title: Process Description
+          type: string
+        process_name:
+          title: Process Name
+          type: string
+        real_time_ingestion_id:
+          title: Real Time Ingestion Id
+          type: integer
+        table_id:
+          title: Table Id
+          type: string
+        topic_name:
+          title: Topic Name
+          type: string
+      required:
+      - process_name
+      - process_description
+      - api_schemas_id
+      - real_time_ingestion_id
+      - parent_schema
+      - table_id
+      - partition_column
+      - topic_name
+      title: GitopsRequest
+      type: object
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          title: Detail
+          type: array
+      title: HTTPValidationError
+      type: object
+    IngestionTypes:
+      description: An enumeration.
+      enum:
+      - gcp_bigquery_table
+      - gcp_pubsub_topic
+      - gcp_storage
+      title: IngestionTypes
+    Message:
+      properties:
+        message:
+          title: Message
+          type: string
+      required:
+      - message
+      title: Message
+      type: object
+    RealTimeIngestion:
+      properties:
+        api_contract_id:
+          title: Api Contract Id
+          type: integer
+        api_schema_id:
+          title: Api Schema Id
+          type: integer
+        created_at:
+          format: date-time
+          title: Created At
+          type: string
+        id:
+          title: Id
+          type: integer
+        resources:
+          items:
+            $ref: '#/components/schemas/CloudResources'
+          title: Resources
+          type: array
+        state:
+          $ref: '#/components/schemas/States'
+        type:
+          $ref: '#/components/schemas/IngestionTypes'
+      required:
+      - api_contract_id
+      - api_schema_id
+      - type
+      - state
+      title: RealTimeIngestion
+      type: object
+    RealTimeIngestionRQ:
+      properties:
+        cloud_resources:
+          items:
+            $ref: '#/components/schemas/CloudResourcesRQ'
+          title: Cloud Resources
+          type: array
+        id:
+          title: Id
+          type: integer
+        state:
+          $ref: '#/components/schemas/States'
+      required:
+      - id
+      - state
+      - cloud_resources
+      title: RealTimeIngestionRQ
+      type: object
+    States:
+      description: An enumeration.
+      enum:
+      - creating
+      - running
+      - paused
+      - deleting
+      - failed
+      title: States
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          title: Location
+          type: array
+        msg:
+          title: Message
+          type: string
+        type:
+          title: Error Type
+          type: string
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+      type: object
+info:
+  title: CCP-Ingest
+  version: 0.0.1
+openapi: 3.0.2
+paths:
+  /api/contracts/:
+    get:
+      operationId: api_contracts_get_contract_api_contracts__get
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/ApiContract'
+                title: Response Api Contracts Get Contract Api Contracts  Get
+                type: array
+          description: Successful Response
+      summary: Api:Contracts:Get-Contract
+      tags:
+      - contracts
+    post:
+      operationId: api_contracts_create_contract_api_contracts__post
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Body_api_contracts_create_contract_api_contracts__post'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiContract'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Api:Contracts:Create-Contract
+      tags:
+      - contracts
+  /api/contracts/by_user/:
+    get:
+      operationId: api_contracts_get_contract_by_user_id_api_contracts_by_user__get
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/ApiContract'
+                title: Response Api Contracts Get Contract By User Id Api Contracts
+                  By User  Get
+                type: array
+          description: Successful Response
+      summary: Api:Contracts:Get-Contract-By-User-Id
+      tags:
+      - contracts
+  /api/contracts/{contract_id}:
+    get:
+      operationId: api_contracts_get_contract_by_id_api_contracts__contract_id__get
+      parameters:
+      - in: path
+        name: contract_id
+        required: true
+        schema:
+          title: Contract Id
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiContract'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Api:Contracts:Get-Contract-By-Id
+      tags:
+      - contracts
+  /api/hello:
+    get:
+      operationId: api_get_hello_api_hello_get
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+      summary: Api:Get-Hello
+  /api/ingests/:
+    get:
+      operationId: api_ingest_get_ingestion_api_ingests__get
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/RealTimeIngestion'
+                title: Response Api Ingest Get Ingestion Api Ingests  Get
+                type: array
+          description: Successful Response
+      summary: Api:Ingest:Get-Ingestion
+      tags:
+      - ingests
+    post:
+      operationId: api_ingest_create_ingest_api_ingests__post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ContractCreate'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GitopsRequest'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Api:Ingest:Create-Ingest
+      tags:
+      - ingests
+    put:
+      operationId: api_ingest_update_ingest_api_ingests__put
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RealTimeIngestionRQ'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Message'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Api:Ingest:Update-Ingest
+      tags:
+      - ingests
+  /api/ingests/{ingestion_id}:
+    get:
+      operationId: api_ingest_get_ingestion_by_id_api_ingests__ingestion_id__get
+      parameters:
+      - in: path
+        name: ingestion_id
+        required: true
+        schema:
+          title: Ingestion Id
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RealTimeIngestion'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Api:Ingest:Get-Ingestion-By-Id
+      tags:
+      - ingests
+  /api/ingests/{ingestion_id}/schemas:
+    get:
+      operationId: api_ingest_get_ingestion_schemas_api_ingests__ingestion_id__schemas_get
+      parameters:
+      - in: path
+        name: ingestion_id
+        required: true
+        schema:
+          title: Ingestion Id
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiSchemas'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Api:Ingest:Get-Ingestion-Schemas
+      tags:
+      - ingests
